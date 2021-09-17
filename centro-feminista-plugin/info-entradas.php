@@ -9,14 +9,7 @@
  * Author:            Cooperativa de trabajo SUBTE
  */
 
-// Shortcode to output custom PHP in Elementor
-function get_publicaciones_investigacion( $atts ) {
-    $args = array(
-      'category__and' => '10',
-      'tag__in' => '14',
-      'posts_per_page' => '2'
-    );
-    $posts = get_posts($args);
+function build_publicaciones_container($posts) {
     foreach ($posts as $post) {
         $tags = get_the_tags($post->ID);
         ?>
@@ -38,18 +31,9 @@ function get_publicaciones_investigacion( $atts ) {
         </div>
     <?php
     }
-}
+ }
 
-add_shortcode( 'publicaciones-investigacion', 'get_publicaciones_investigacion');
-
-// Shortcode to output custom PHP in Elementor
-function get_noticias_investigacion( $atts ) {
-    $args = array(
-      'category__and' => '11',
-      'tag__in' => '14',
-      'posts_per_page' => '4'
-    );
-    $posts = get_posts($args);
+ function build_noticias_container($posts) {
     ?>
     <div class="noticias-container">
     <?php
@@ -78,6 +62,45 @@ function get_noticias_investigacion( $atts ) {
     ?>
     </div>
     <?php
+ }
+
+// Shortcode to output custom PHP in Elementor
+function get_publicaciones_investigacion( $atts ) {
+    $args = array(
+      'category__and' => '10',
+      'tag__in' => '14',
+      'posts_per_page' => '2'
+    );
+    $posts = get_posts($args);
+    build_publicaciones_container($posts);
+}
+
+add_shortcode( 'publicaciones-investigacion', 'get_publicaciones_investigacion');
+
+// Shortcode to output custom PHP in Elementor
+function get_noticias_investigacion( $atts ) {
+    $args = array(
+      'category__and' => '11',
+      'tag__in' => '14',
+      'posts_per_page' => '4'
+    );
+    $posts = get_posts($args);
+    build_noticias_container($posts);
 }
 
 add_shortcode( 'noticias-investigacion', 'get_noticias_investigacion');
+
+// Shortcode to output custom PHP in Elementor
+function get_publicaciones_ensenanza( $atts ) {
+    $tag_ensenanza = '15';
+    $category_publicaciones = '10';
+    $args = array(
+      'category__and' => $category_publicaciones,
+      'tag__in' => $tag_ensenanza,
+      'posts_per_page' => '4'
+    );
+    $posts = get_posts($args);
+    build_publicaciones_container($posts);
+}
+
+add_shortcode( 'publicaciones-ensenanza', 'get_publicaciones_ensenanza');

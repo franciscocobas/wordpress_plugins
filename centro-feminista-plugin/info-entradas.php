@@ -18,7 +18,7 @@ function build_publicaciones_container($posts) {
             <div>
                 <div class="content">
                     <p><?php echo get_the_title($post) ?></p>
-                    <a href="<?php echo esc_url(get_post_permalink($post)) ?>">Ver Publicación</a>
+                    <a href="<?php echo esc_url(get_post_permalink($post)) ?>">Ver Publicaci&#243;n</a>
                 </div>
                 <div class="tags-categories">
                     <?php
@@ -96,7 +96,7 @@ function get_query($category_slug, $tag_slug, $number_posts) {
 }
 
 // Create shortcode for noticias in portada
-function get_noticias_portada( $atts ) {
+function get_noticias_portada($atts) {
     $args = array(
       'category_name' => $CAT_NOTICIAS,
       'posts_per_page' => '4'
@@ -108,24 +108,24 @@ function get_noticias_portada( $atts ) {
 add_shortcode('noticias-portada', 'get_noticias_portada');
 
 // Create shortcode for poublicaciones in investigacion
-function get_publicaciones_investigacion( $atts ) {
-    $posts = get_posts(get_query($CAT_PUBLICACIONES, $TAG_INVESTIGACION, '2'));
+function get_publicaciones_investigacion($atts) {
+    $posts = get_posts(get_query('publicaciones', 'investigacion', '2'));
     build_publicaciones_container($posts);
 }
 
 add_shortcode( 'publicaciones-investigacion', 'get_publicaciones_investigacion');
 
 // Create shortcode for noticias in investigacion
-function get_noticias_investigacion( $atts ) {
-    $posts = get_posts(get_query($CAT_NOTICIAS, $TAG_INVESTIGACION, '4'));
+function get_noticias_investigacion($atts) {
+    $posts = get_posts(get_query('noticias', 'investigacion', '4'));
     build_noticias_container($posts);
 }
 
 add_shortcode( 'noticias-investigacion', 'get_noticias_investigacion');
 
 // Create shortcode for poublicaciones in enseñanza
-function get_publicaciones_ensenanza( $atts ) {
-    $posts = get_posts(get_query($CAT_PUBLICACIONES, $TAG_ENSENANZA, '2'));
+function get_publicaciones_ensenanza($atts) {
+    $posts = get_posts(get_query('publicaciones', 'ensenanza', '2'));
     build_publicaciones_container($posts);
 }
 
@@ -133,8 +133,80 @@ add_shortcode( 'publicaciones-ensenanza', 'get_publicaciones_ensenanza');
 
 // Create shortcode for noticias in enseñanza
 function get_noticias_ensenanza($atts) {
-    $posts = get_posts(get_query($CAT_NOTICIAS, $TAG_ENSENANZA, '4'));
+    $posts = get_posts(get_query('noticias', 'ensenanza', '4'));
     build_noticias_container($posts);
 }
 
 add_shortcode( 'noticias-ensenanza', 'get_noticias_ensenanza');
+
+// Create shortcode for noticias in enseñanza
+function get_publicaciones_extension($atts) {
+    $posts = get_posts(get_query('publicaciones', 'extension', '2'));
+    build_publicaciones_container($posts);
+}
+
+add_shortcode( 'publicaciones-extension', 'get_publicaciones_extension');
+
+// Create shortcode for noticias in enseñanza
+function get_noticias_extension($atts) {
+    $posts = get_posts(get_query('noticias', 'extension', '4'));
+    build_noticias_container($posts);
+}
+
+add_shortcode( 'noticias-extension', 'get_noticias_extension');
+
+// Create shortcode for noticias in enseñanza
+function get_publicaciones_observatorio($atts) {
+    $posts = get_posts(get_query('publicaciones', 'observatorio', '2'));
+    build_publicaciones_container($posts);
+}
+
+add_shortcode( 'publicaciones-observatorio', 'get_publicaciones_observatorio');
+
+// Create shortcode for noticias in enseñanza
+function get_noticias_observatorio($atts) {
+    $posts = get_posts(get_query('noticias', 'observatorio', '4'));
+    build_noticias_container($posts);
+}
+
+add_shortcode( 'noticias-observatorio', 'get_noticias_observatorio');
+
+// Create shortcode for noticias in enseñanza
+function get_publicaciones_biblioteca($atts) {
+    $posts = get_posts(get_query('publicaciones', 'biblioteca', '2'));
+    build_publicaciones_container($posts);
+}
+
+add_shortcode( 'publicaciones-biblioteca', 'get_publicaciones_biblioteca');
+
+// Create shortcode for noticias in enseñanza
+function get_noticias_biblioteca($atts) {
+    $posts = get_posts(get_query('noticias', 'biblioteca', '4'));
+    build_noticias_container($posts);
+}
+
+add_shortcode( 'noticias-biblioteca', 'get_noticias_biblioteca');
+
+// Create shortcode for noticias in enseñanza
+function get_noticias_novedades($atts) {
+    $args = array(
+        'category_name' => 'noticias',
+        'posts_per_page' => '4'
+    );
+    $posts = get_posts($args);
+    build_noticias_container($posts);
+}
+
+add_shortcode( 'noticias-novedades', 'get_noticias_novedades');
+
+// Create shortcode for noticias in enseñanza
+function get_publicaciones_novedades($atts) {
+     $args = array(
+        'category_name' => 'publicaciones',
+        'posts_per_page' => '2'
+    );
+    $posts = get_posts($args);
+    build_publicaciones_container($posts);
+}
+
+add_shortcode( 'publicaciones-novedades', 'get_publicaciones_novedades');

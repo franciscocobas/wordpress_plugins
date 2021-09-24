@@ -64,43 +64,77 @@ function build_publicaciones_container($posts) {
     <?php
  }
 
-// Shortcode to output custom PHP in Elementor
-function get_publicaciones_investigacion( $atts ) {
-    $args = array(
-      'category__and' => '10',
-      'tag__in' => '14',
-      'posts_per_page' => '2'
+$CAT_EVENTOS = 'eventos';
+$CAT_NOTICIAS = 'noticias';
+$CAT_PUBLICACIONES = 'publicaciones';
+$CAT_SEMINARIOS = 'seminarios';
+
+$TAG_BIBLIOTECA = 'biblioteca';
+$TAG_ENSENANZA = 'ensenanza';
+$TAG_EXTENSION = 'extension';
+$TAG_INVESTIGACION = 'investigacion';
+$TAG_OBSERVATORIO = 'observatorio';
+
+function get_query($category_slug, $tag_slug, $number_posts) {
+    $query = array(
+        'tax_query' => array(
+            'relation' => 'AND',
+            array(
+                'taxonomy' => 'category',
+                'field' => 'slug',
+                'terms' => $category_slug
+            ),
+            array(
+                'taxonomy' => 'post_tag',
+                'field' => 'slug',
+                'terms' => $tag_slug
+            ),
+        ),
+        'posts_per_page' => $number_posts
     );
-    $posts = get_posts($args);
-    build_publicaciones_container($posts);
+    return $query;
 }
 
-add_shortcode( 'publicaciones-investigacion', 'get_publicaciones_investigacion');
-
-// Shortcode to output custom PHP in Elementor
-function get_noticias_investigacion( $atts ) {
+// Create shortcode for noticias in portada
+function get_noticias_portada( $atts ) {
     $args = array(
-      'category__and' => '11',
-      'tag__in' => '14',
+      'category_name' => $CAT_NOTICIAS,
       'posts_per_page' => '4'
     );
     $posts = get_posts($args);
     build_noticias_container($posts);
 }
 
+add_shortcode('noticias-portada', 'get_noticias_portada');
+
+// Create shortcode for poublicaciones in investigacion
+function get_publicaciones_investigacion( $atts ) {
+    $posts = get_posts(get_query($CAT_PUBLICACIONES, $TAG_INVESTIGACION, '2'));
+    build_publicaciones_container($posts);
+}
+
+add_shortcode( 'publicaciones-investigacion', 'get_publicaciones_investigacion');
+
+// Create shortcode for noticias in investigacion
+function get_noticias_investigacion( $atts ) {
+    $posts = get_posts(get_query($CAT_NOTICIAS, $TAG_INVESTIGACION, '4'));
+    build_noticias_container($posts);
+}
+
 add_shortcode( 'noticias-investigacion', 'get_noticias_investigacion');
 
-// Shortcode to output custom PHP in Elementor
+// Create shortcode for poublicaciones in enseñanza
 function get_publicaciones_ensenanza( $atts ) {
-    $tag_ensenanza = '15';
-    $category_publicaciones = '10';
-    $args = array(
-      'category__and' => $category_publicaciones,
-      'tag__in' => $tag_ensenanza,
-      'posts_per_page' => '4'
-    );
-    $posts = get_posts($args);
+    $posts = get_posts(get_query($CAT_PUBLICACIONES, $TAG_ENSENANZA, '2'));
     build_publicaciones_container($posts);
 }
 
 add_shortcode( 'publicaciones-ensenanza', 'get_publicaciones_ensenanza');
+
+// Create shortcode for noticias in enseñanza
+function get_noticias_ensenanza($atts) {
+    $posts = get_posts(get_query($CAT_NOTICIAS, $TAG_ENSENANZA, '4'));
+    build_noticias_container($posts);
+}
+
+add_shortcode( 'noticias-ensenanza', 'get_noticias_ensenanza');

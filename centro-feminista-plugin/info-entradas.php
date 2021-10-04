@@ -276,7 +276,7 @@ add_shortcode( 'publicaciones-novedades', 'get_publicaciones_novedades');
 // Eventos
 function get_eventos_novedades($atts) {
     $args = array(
-        'category_name' => 'novedades',
+        'category_name' => 'eventos',
         'posts_per_page' => '2'
     );
     $posts = get_posts($args);

@@ -116,6 +116,13 @@
 }
 .evento-container .header a {
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+.evento-container .header a svg {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
 }
 .evento-container .header .event-title {
   flex: 1;

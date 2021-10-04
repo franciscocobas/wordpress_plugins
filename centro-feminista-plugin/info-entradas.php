@@ -18,7 +18,13 @@ function build_events_container($posts, $sectionName) {
                 <p class="date"><?php echo the_field('fecha', $post->ID) ?> | <?php echo the_field('hora', $post->ID) ?></p>
                 <p class="event-title"><?php echo get_the_title($post) ?></p>
                 <a href="<?php echo esc_url(get_post_permalink($post)) ?>">
-                    Ver m&aacute;s <i aria-hidden="true" class="fas fa-arrow-right"></i>
+                    Ver m&aacute;s <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 136.12 109.52" style="enable-background:new 0 0 136.12 109.52;" xml:space="preserve">
+                    <path d="M134.44,54.4c-0.01-0.09-0.01-0.18-0.03-0.27c-0.03-0.19-0.09-0.37-0.16-0.56c-0.01-0.01-0.01-0.03-0.01-0.04
+                        c-0.18-0.46-0.45-0.9-0.85-1.3L83.42,2.26c-1.44-1.44-3.53-1.44-4.97,0L75.31,5.4C74,6.7,74,8.8,75.44,10.24l38.88,38.88H5.16
+                        c-2.04,0-3.52,1.48-3.52,3.52v4.44c0,1.85,1.48,3.33,3.52,3.33h109.12L75.42,99.27c-1.44,1.44-1.44,3.53,0,4.97l3.14,3.14
+                        c1.31,1.31,3.4,1.31,4.84-0.13l49.98-49.98c0.56-0.56,0.89-1.21,1.03-1.88c0.01-0.04,0.01-0.08,0.01-0.12
+                        c0.03-0.17,0.05-0.34,0.05-0.51C134.47,54.64,134.46,54.52,134.44,54.4z"/>
+                    </svg>
                 </a>
             </div>
             <div class="content">

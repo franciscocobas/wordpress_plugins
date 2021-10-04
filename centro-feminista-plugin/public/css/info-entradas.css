@@ -1,5 +1,3 @@
-/* This styles are located on the header Elementor component */
-
 /* Main Styles */
 .mb-0.elementor-element {
   margin-bottom: 0;
@@ -17,7 +15,8 @@
   flex: 1;
 }
 .publicacion-container .content {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   justify-content: space-between;
 }
 .publicacion-container .content p {
@@ -34,11 +33,30 @@
   border: 1px solid #683fdc;
   padding: 0.5rem 1rem;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.publicacion-container .content a:hover {
+  background: #683fdc;
+  color: white;
 }
 .publicacion-container .tags-categories a {
   text-decoration: underline;
   margin-right: 1rem;
   font-size: 0.9rem;
+}
+
+@media (max-width: 576px) {
+  .publicacion-container .content {
+    grid-template-columns: 1fr;
+  }
+  .publicacion-container .content a {
+    margin-top: 0.5rem;
+  }
+  .publicacion-container .tags-categories a {
+    margin-top: 0.5rem;
+  }
 }
 
 /* Noticias */
@@ -52,9 +70,15 @@
   flex-direction: column;
   align-items: center;
 }
+.noticia-container .image-link-container img {
+  height: 100%;
+  object-fit: cover;
+}
 .noticia-container .text-content {
   padding: 1rem;
   border: 1px solid #6ec1e4;
+  border-top: none;
+  flex: 1;
 }
 .noticia-container .post-title a {
   font-family: 'Brandon', Sans-serif;
@@ -69,6 +93,13 @@
   color: #6ec1e4;
   font-size: 0.9rem;
   text-decoration: underline;
+  font-family: 'Brandon', Sans-serif;
+}
+@media (max-width: 576px) {
+  .noticias-container {
+    grid-template-columns: 1fr;
+    grid-row-gap: 25px;
+  }
 }
 
 /* Eventos */
@@ -103,4 +134,15 @@
 .evento-container .tags-categories a {
   text-decoration: underline;
   font-size: 1rem;
+}
+@media (max-width: 576px) {
+  .evento-container .header {
+    flex-wrap: wrap;
+  }
+  .evento-container .header .date {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
 }

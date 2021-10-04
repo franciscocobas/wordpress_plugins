@@ -70,7 +70,7 @@ function build_publicaciones_container($posts, $sectionName) {
 
         <div class="noticia-container">
             <?php 
-            echo "<a href=\"".esc_url(get_post_permalink($post))."\">".get_the_post_thumbnail($post, 'thumbnail')."</a>";
+            echo "<a class='image-link-container' href=\"".esc_url(get_post_permalink($post))."\">".get_the_post_thumbnail($post, 'medium')."</a>";
             echo "<div class=\"text-content\">";
             echo "<p class=\"post-title\">";
             echo "<a href=\"".esc_url(get_post_permalink($post))."\">".get_the_title($post)."</a>";
@@ -125,11 +125,11 @@ function get_query($category_slug, $tag_slug, $number_posts) {
 // Create shortcode for noticias in portada
 function get_noticias_portada($atts) {
     $args = array(
-      'category_name' => $CAT_NOTICIAS,
+      'category_name' => 'noticias',
       'posts_per_page' => '4'
     );
     $posts = get_posts($args);
-    build_noticias_container($posts);
+    build_noticias_container($posts, 'inicio');
 }
 
 add_shortcode('noticias-portada', 'get_noticias_portada');

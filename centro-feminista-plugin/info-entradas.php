@@ -58,6 +58,10 @@ function displayViewMoreLink($text, $link, $sectionName) {
  }
 
 function build_publicaciones_container($posts, $sectionName, $viewMoreLink) {
+    $countPosts = count($posts);
+    if ($countPosts > 2) {
+        array_pop($posts);
+    }
     if (count($posts) === 0) echo '<p class="no-post-message">Por el momento no hay publicaciones para mostrar.</p>';
     foreach ($posts as $post) {
         $tags = get_the_tags($post->ID);
@@ -84,7 +88,7 @@ function build_publicaciones_container($posts, $sectionName, $viewMoreLink) {
         </div>
     <?php
     }
-    if (count($posts) > 2) {
+    if ($countPosts > 2) {
         displayViewMoreLink('Ver más', $viewMoreLink, $sectionName);
     }
  }
@@ -178,7 +182,7 @@ function get_noticias($atts) {
 add_shortcode('noticias', 'get_noticias');
 
 function get_publicaciones($atts) {
-    $posts = get_posts(get_query('publicaciones', $atts['tag'], '2'));
+    $posts = get_posts(get_query('publicaciones', $atts['tag'], '3'));
     build_publicaciones_container($posts, $atts['tag'], $atts['view-more-link']);
 }
 add_shortcode('publicaciones', 'get_publicaciones');
@@ -204,7 +208,7 @@ add_shortcode('noticias-sin-tag', 'get_noticias_without_tag');
 function get_publicaciones_novedades($atts) {
     $args = array(
         'category_name' => 'publicaciones',
-        'posts_per_page' => '2'
+        'posts_per_page' => '3'
     );
     $posts = get_posts($args);
     build_publicaciones_container($posts, 'novedades', $atts['view-more-link']);

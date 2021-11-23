@@ -43,7 +43,7 @@ function displayViewMoreLink($text, $link, $sectionName) {
             echo "<p class=\"excerpt\">".get_the_excerpt($post)."</p>";
             foreach($tags as $tag) {
                 echo "<div class=\"tags-container\">";
-                echo "<a href=\"".esc_attr(get_tag_link($tag->term_id))."\">".$tag->name."</a>";
+                echo "<p>Etiquetas: <a href=\"".esc_attr(get_tag_link($tag->term_id))."\">".$tag->name."</a></p>";
                 echo "</div>";
             }
             echo "</div>"
@@ -59,37 +59,58 @@ function displayViewMoreLink($text, $link, $sectionName) {
 
 function build_publicaciones_container($posts, $sectionName, $viewMoreLink) {
     $countPosts = count($posts);
-    if ($countPosts > 2) {
+    if ($countPosts > 4) {
         array_pop($posts);
     }
-    if (count($posts) === 0) echo '<p class="no-post-message">Por el momento no hay publicaciones para mostrar.</p>';
-    foreach ($posts as $post) {
-        $tags = get_the_tags($post->ID);
-        echo '<div class="publicacion-container '.$sectionName.'">';
-        ?>
-            <svg xmlns="http://www.w3.org/2000/svg" width="28.555" height="27.448" viewBox="0 0 28.555 27.448"><defs><style>.a{fill:#3db7d3;fill-rule:evenodd;}</style></defs><path class="a" d="M2887.942,1014.826c.5,0,.939-1.391,1.275-2.083a14.146,14.146,0,0,1,10.607-8.086c1.721-.341,2.619.029,2.56,1.989-.112,3.893.063,7.8-.061,11.7a14.222,14.222,0,0,1-28.431-.365c-.027-3.663.122-7.325-.053-10.977-.108-2.349.939-2.734,2.962-2.277a14.031,14.031,0,0,1,10.045,7.732C2887.225,1013.229,2887.655,1014.825,2887.942,1014.826Z" transform="translate(-2873.831 -1004.545)"/></svg>
-            <div>
-                <div class="content">
-                    <p><?php echo get_the_title($post) ?></p>
-                    <?php 
-                    if(!empty(get_field('link_al_archivo', $post->ID))) {
-                        echo '<a target="_blank" href="'.esc_url(get_field('link_al_archivo', $post->ID)).'">Ver Publicaci&#243;n</a>';
-                    } 
-                    ?>
+
+    if (count($posts) === 0) {
+        echo '<p class="no-post-message">Por el momento no hay publicaciones para mostrar.</p>';
+    } else {
+        echo '<div class="grid-publicaciones">';
+        foreach ($posts as $post) {
+            $tags = get_the_tags($post->ID);
+            echo '<div class="publicacion-container '.$sectionName.'">';
+            ?>
+                <a class="img-container" href="<?php echo esc_url(get_post_permalink($post)) ?>">
+                    <div class="left-border">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <?php echo get_the_post_thumbnail($post, 'large') ?>
+                </a>
+                <div class="text-content">
+                    <p class="title">
+                        <a href="<?php echo esc_url(get_post_permalink($post)) ?>">
+                            <?php echo get_the_title($post) ?>
+                        </a>
+                    </p>
+                    <p class="excerpt">
+                        <a href="<?php echo esc_url(get_post_permalink($post)) ?>">
+                            <?php echo get_the_excerpt($post) ?>
+                        </a>
+                    </p>
                 </div>
                 <div class="tags-categories">
                     <?php
-                    foreach($tags as $tag) {
-                        echo "<a href=\"".esc_attr(get_tag_link($tag->term_id))."\">".$tag->name."</a>";
+                    if ($tags) {
+                        echo '<p>Etiquetas: ';
+                        foreach($tags as $tag) {
+                            echo "<a href=\"".esc_attr(get_tag_link($tag->term_id))."\">".$tag->name."</a>";
+                        }
+                        echo '</p>';
                     }
                     ?>
                 </div>
-            </div>
-        </div>
-    <?php
-    }
-    if ($countPosts > 2) {
-        displayViewMoreLink('Ver más', $viewMoreLink, $sectionName);
+            <?php
+            echo '</div>';
+        }
+        echo '</div>';
+        if ($countPosts > 4) {
+            displayViewMoreLink('Ver más', $viewMoreLink, $sectionName);
+        }
     }
  }
 
@@ -208,7 +229,7 @@ add_shortcode('noticias-sin-tag', 'get_noticias_without_tag');
 function get_publicaciones_novedades($atts) {
     $args = array(
         'category_name' => 'publicaciones',
-        'posts_per_page' => '3'
+        'posts_per_page' => '4'
     );
     $posts = get_posts($args);
     build_publicaciones_container($posts, 'novedades', $atts['view-more-link']);

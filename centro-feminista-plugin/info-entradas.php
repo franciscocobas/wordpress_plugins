@@ -29,6 +29,12 @@ function displayViewMoreLink($text, $link, $sectionName) {
 
  function build_noticias_container($posts, $sectionName, $viewMoreLink) {
     if (count($posts) === 0) echo '<p class="no-post-message">Por el momento no hay noticias para mostrar.</p>';
+    $countPosts = count($posts);
+    $showViewMore = false;
+    if ($countPosts > 4) {
+        array_pop($posts);
+        $showViewMore = true;
+    }
     echo '<div class="noticias-container '.$sectionName.'">';
     foreach ($posts as $post) {
         $tags = get_the_tags($post->ID);
@@ -52,15 +58,17 @@ function displayViewMoreLink($text, $link, $sectionName) {
     <?php
     }
     echo '</div>';
-    if (count($posts) > 4) {
+    if ($showViewMore) {
         displayViewMoreLink('Ver más', $viewMoreLink, $sectionName);
     }
  }
 
 function build_publicaciones_container($posts, $sectionName, $viewMoreLink) {
     $countPosts = count($posts);
-    if ($countPosts > 4) {
+    $showViewMore = false;
+    if ($countPosts > 3) {
         array_pop($posts);
+        $showViewMore = true;
     }
 
     if (count($posts) === 0) {
@@ -108,7 +116,7 @@ function build_publicaciones_container($posts, $sectionName, $viewMoreLink) {
             echo '</div>';
         }
         echo '</div>';
-        if ($countPosts > 4) {
+        if ($showViewMore) {
             displayViewMoreLink('Ver más', $viewMoreLink, $sectionName);
         }
     }
@@ -152,8 +160,14 @@ function build_events_container($posts, $sectionName, $viewMoreLink) {
     }
  }
 
- function build_recursos_container($posts, $viewMoreLink) {
+ function build_recursos_container($posts, $sectionName, $viewMoreLink) {
     if (count($posts) === 0) echo '<p class="no-post-message">Por el momento no hay recursos para mostrar.</p>';
+    $countPosts = count($posts);
+    $showViewMore = false;
+    if ($countPosts > 2) {
+        array_pop($posts);
+        $showViewMore = true;
+    }
     echo '<div class="recursos-container">';
     foreach ($posts as $post) {
         $tags = get_the_tags($post->ID);
@@ -162,8 +176,12 @@ function build_events_container($posts, $sectionName, $viewMoreLink) {
                 echo '<p class="post-title">'.get_the_title($post).'</p>';
                 echo '<a href="'.esc_url(get_post_permalink($post)).'">Ver</a>';
             echo '</div>';
-            foreach($tags as $tag) {
-                echo '<a href="'.esc_attr(get_tag_link($tag->term_id)).'">'.$tag->name.'</a>';
+            if ($tags) {
+                echo '<p>Etiquetas: ';
+                foreach($tags as $tag) {
+                    echo '<a href="'.esc_attr(get_tag_link($tag->term_id)).'">'.$tag->name.'</a>';
+                }
+                echo '</p>';
             }
         echo '</div>';
     ?>
@@ -171,7 +189,7 @@ function build_events_container($posts, $sectionName, $viewMoreLink) {
     }
     echo '</div>';
 
-    if (count($posts) > 2) {
+    if ($showViewMore) {
         displayViewMoreLink('Ver más recursos', $viewMoreLink, $sectionName);
     }
  }
@@ -204,7 +222,7 @@ add_shortcode('noticias', 'get_noticias');
 
 function get_publicaciones($atts) {
     $posts = get_posts(get_query('publicaciones', $atts['tag'], '3'));
-    build_publicaciones_container($posts, $atts['tag'], $atts['view-more-link']);
+    build_publicaciones_container($posts, $atts['tag'], $atts['view-more-link'], 3);
 }
 add_shortcode('publicaciones', 'get_publicaciones');
 
@@ -232,7 +250,7 @@ function get_publicaciones_novedades($atts) {
         'posts_per_page' => '4'
     );
     $posts = get_posts($args);
-    build_publicaciones_container($posts, 'novedades', $atts['view-more-link']);
+    build_publicaciones_container($posts, 'novedades', $atts['view-more-link'], 4);
 }
 add_shortcode( 'publicaciones-novedades', 'get_publicaciones_novedades');
 
@@ -250,7 +268,7 @@ add_shortcode( 'eventos-novedades', 'get_eventos_novedades');
 function get_otros_recursos_novedades($atts) {
     $args = array(
         'category_name' => 'otros-recursos',
-        'posts_per_page' => 2
+        'posts_per_page' => 3
     );
     $posts = get_posts($args);
     build_recursos_container($posts, 'novedades', $atts['view-more-link']);

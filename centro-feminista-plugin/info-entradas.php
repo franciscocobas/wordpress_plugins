@@ -190,7 +190,7 @@ function build_events_container($posts, $sectionName, $viewMoreLink) {
     echo '</div>';
 
     if ($showViewMore) {
-        displayViewMoreLink('Ver más recursos', $viewMoreLink, $sectionName);
+        displayViewMoreLink('Ver más', $viewMoreLink, $sectionName);
     }
  }
 

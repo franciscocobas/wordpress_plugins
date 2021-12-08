@@ -130,7 +130,7 @@ function build_events_container($posts, $sectionName, $viewMoreLink) {
         <div class="evento-container <?php echo $sectionName ?>">
             <div class="header">
                 <p class="date"><?php echo the_field('fecha', $post->ID) ?> | <?php echo the_field('hora', $post->ID) ?></p>
-                <p class="event-title"><?php echo get_the_title($post) ?></p>
+                <a href="<?php echo esc_url(get_post_permalink($post)) ?>" class="event-title"><?php echo get_the_title($post) ?></a>
                 <a href="<?php echo esc_url(get_post_permalink($post)) ?>">
                     Ver m&aacute;s <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 136.12 109.52" style="enable-background:new 0 0 136.12 109.52;" xml:space="preserve">
                     <path d="M134.44,54.4c-0.01-0.09-0.01-0.18-0.03-0.27c-0.03-0.19-0.09-0.37-0.16-0.56c-0.01-0.01-0.01-0.03-0.01-0.04

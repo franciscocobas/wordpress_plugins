@@ -9,7 +9,7 @@
  * Author:            Cooperativa de trabajo SUBTE
  */
 
-function columnistas_custom_post_type() {
+function eventos_custom_post_type() {
     register_post_type('m24_eventos',
         array(
             'labels' => array(
@@ -21,6 +21,7 @@ function columnistas_custom_post_type() {
             'rewrite' => array( 'slug' => 'eventos-urls' ),
             'menu_icon' => 'dashicons-calendar',
             'show_in_rest' => true,
+            'rest_base' => 'eventos',
             'show_in_graphql' => true,
             'graphql_single_name' => 'evento',
             'graphql_plural_name' => 'eventos',
@@ -30,4 +31,14 @@ function columnistas_custom_post_type() {
         )
     );
 }
-add_action('init', 'columnistas_custom_post_type');
+add_action('init', 'eventos_custom_post_type');
+
+add_action( 'graphql_register_types', function() {
+    register_graphql_field( 'evento', 'fecha-evento', [
+        'type' => 'Number',
+        'description' => __( 'Link to edit the content', 'your-textdomain' ),
+        'resolve' => function( $post, $args, $context, $info ) {
+            return strtotime(get_field('fecha', $post->ID));
+        }
+    ]);
+});

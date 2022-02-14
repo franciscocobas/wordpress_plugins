@@ -47,12 +47,19 @@ function displayViewMoreLink($text, $link, $sectionName) {
             echo "<a href=\"".esc_url(get_post_permalink($post))."\">".get_the_title($post)."</a>";
             echo "</p>";
             echo "<p class=\"excerpt\">".get_the_excerpt($post)."</p>";
-            foreach($tags as $tag) {
-                echo "<div class=\"tags-container\">";
-                echo "<p>Etiquetas: <a href=\"".esc_attr(get_tag_link($tag->term_id))."\">".$tag->name."</a></p>";
+            if (count($tags) > 0) {
+                echo "<div class='tags-container'>";
+                echo "<p>Etiquetas: ";
+                foreach($tags as $key=>$value) {
+                    if ($key === 0) {
+                        echo "<a href='".esc_attr(get_tag_link($value->term_id))."'>".$value->name."</a>";
+                    } else {
+                        echo ", <a href='".esc_attr(get_tag_link($value->term_id))."'>".$value->name."</a>";
+                    }
+                }
                 echo "</div>";
             }
-            echo "</div>"
+            echo "</div>";
             ?>
         </div>
     <?php
